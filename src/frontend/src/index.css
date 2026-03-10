@@ -1,0 +1,305 @@
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 0px;
+
+  /* Matrix color palette */
+  --background: 0 0 0;
+  --foreground: 0.87 0.295 142;
+  --card: 0.07 0 0;
+  --card-foreground: 0.87 0.295 142;
+  --popover: 0.07 0 0;
+  --popover-foreground: 0.87 0.295 142;
+  --primary: 0.87 0.295 142;
+  --primary-foreground: 0 0 0;
+  --secondary: 0.83 0.17 207;
+  --secondary-foreground: 0 0 0;
+  --muted: 0.12 0 0;
+  --muted-foreground: 0.65 0.19 142;
+  --accent: 0.83 0.17 207;
+  --accent-foreground: 0 0 0;
+  --destructive: 0.65 0.25 27;
+  --destructive-foreground: 0.98 0 0;
+  --border: 0.25 0.12 142;
+  --input: 0.12 0.04 142;
+  --ring: 0.87 0.295 142;
+
+  /* Chart */
+  --chart-1: 0.87 0.295 142;
+  --chart-2: 0.83 0.17 207;
+  --chart-3: 0.65 0.19 142;
+  --chart-4: 0.55 0.15 207;
+  --chart-5: 0.4 0.1 142;
+
+  /* Sidebar */
+  --sidebar: 0.05 0 0;
+  --sidebar-foreground: 0.87 0.295 142;
+  --sidebar-primary: 0.87 0.295 142;
+  --sidebar-primary-foreground: 0 0 0;
+  --sidebar-accent: 0.12 0.04 142;
+  --sidebar-accent-foreground: 0.87 0.295 142;
+  --sidebar-border: 0.25 0.12 142;
+  --sidebar-ring: 0.87 0.295 142;
+
+  /* Custom matrix tokens */
+  --neon-green: #00ff41;
+  --electric-blue: #00d4ff;
+  --dim-green: #00aa2b;
+  --dark-surface: #0a0a0a;
+  --darker-surface: #050505;
+
+  --glow-green: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 40px #00ff41;
+  --glow-green-sm: 0 0 5px #00ff41, 0 0 10px #00ff41;
+  --glow-blue: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff;
+  --glow-blue-sm: 0 0 5px #00d4ff, 0 0 10px #00d4ff;
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: #000000;
+  color: #00ff41;
+  font-family: "JetBrains Mono", monospace;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Scanline overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff41;
+  box-shadow: var(--glow-green-sm);
+}
+
+/* Selection */
+::selection {
+  background: #00ff41;
+  color: #000000;
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 #00d4ff, -2px 0 #ff0040;
+    clip-path: inset(0 0 100% 0);
+  }
+  5% {
+    text-shadow: 2px 0 #00d4ff, -2px 0 #ff0040;
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(-2px, 1px);
+  }
+  10% {
+    text-shadow: -2px 0 #00d4ff, 2px 0 #ff0040;
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(2px, -1px);
+  }
+  15% {
+    clip-path: inset(0 0 100% 0);
+    text-shadow: none;
+    transform: translate(0);
+  }
+  100% {
+    clip-path: inset(0 0 100% 0);
+    text-shadow: none;
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-main {
+  0%,
+  90%,
+  100% {
+    transform: translate(0);
+    text-shadow: var(--glow-green);
+  }
+  91% {
+    transform: translate(-2px, 1px);
+    text-shadow: 3px 0 #00d4ff, -3px 0 #ff0040, var(--glow-green);
+  }
+  92% {
+    transform: translate(2px, -1px);
+    text-shadow: -3px 0 #00d4ff, 3px 0 #ff0040;
+  }
+  93% {
+    transform: translate(-1px, 2px);
+    text-shadow: 2px 0 #00d4ff, -2px 0 #ff0040;
+  }
+  94% {
+    transform: translate(0);
+    text-shadow: var(--glow-green);
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-30px) translateX(15px) scale(1.2);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-15px) translateX(-10px) scale(0.9);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(-45px) translateX(20px) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-60px) translateX(5px) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progress-fill {
+  from {
+    width: 0%;
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41;
+  }
+  50% {
+    box-shadow: 0 0 15px #00ff41, 0 0 30px #00ff41, 0 0 50px #00ff41;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-in-boot {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Utility classes */
+.glow-green {
+  text-shadow: var(--glow-green);
+}
+.glow-green-sm {
+  text-shadow: var(--glow-green-sm);
+}
+.glow-blue {
+  text-shadow: var(--glow-blue);
+}
+.glow-blue-sm {
+  text-shadow: var(--glow-blue-sm);
+}
+.box-glow-green {
+  box-shadow: var(--glow-green-sm), inset 0 0 20px rgba(0, 255, 65, 0.05);
+}
+.box-glow-green-hover:hover {
+  box-shadow: var(--glow-green), inset 0 0 30px rgba(0, 255, 65, 0.1);
+}
+.box-glow-blue {
+  box-shadow: var(--glow-blue-sm), inset 0 0 20px rgba(0, 212, 255, 0.05);
+}
+.cursor-blink::after {
+  content: "█";
+  animation: blink 1s step-end infinite;
+  color: #00ff41;
+  text-shadow: var(--glow-green-sm);
+}
+.animate-glitch-main {
+  animation: glitch-main 5s infinite;
+}
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+.animate-slide-up {
+  animation: slide-up 0.6s ease forwards;
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
