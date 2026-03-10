@@ -82,7 +82,7 @@ export default function HeroSection() {
           className="mb-2 text-base md:text-lg tracking-wider font-semibold"
           style={{ color: "#00ff41", textShadow: "0 0 10px #00ff41" }}
         >
-          Alex Mercer
+          Create By Muhammad Arslan
         </div>
 
         <div
